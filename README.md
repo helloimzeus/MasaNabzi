@@ -40,15 +40,33 @@ Dokunmatik ile microSD farklı pinlerde aynı **VSPI** denetleyicisini kullanır
 
 ## İlk kurulum
 
-1. Arduino IDE'de **esp32 by Espressif Systems** kart paketini, **TFT_eSPI** ve **XPT2046_Touchscreen** kütüphanelerini kur. TFT_eSPI'nin seçili kullanıcı ayarında yukarıdaki ekran sürücüsünü ve TFT pinlerini tanımla.
-2. Proje klasöründe aşağıdaki komutla yerel ağ ayar dosyasını oluştur.
+### Yapmanız gereken ağ ayarları
+
+> [!IMPORTANT]
+> Kartı derlemeden önce `EKran.ino` ile **aynı klasörde** `network_settings.h` dosyasını oluşturmanız gerekir. Kendi Wi-Fi ve IP bilgilerinizi bu kopyaya yazın. Kart yazılımındaki `#include "network_settings.h"` satırı ayarları buradan okur.
+
+1. [Örnek ağ ayarları dosyasını](EKran/network_settings.example.h) aynı klasöre `network_settings.h` adıyla kopyalayın. Windows'ta projenin ana klasöründe PowerShell açarak şu komutu çalıştırabilirsiniz.
 
    ```powershell
    Copy-Item .\EKran\network_settings.example.h .\EKran\network_settings.h
    ```
 
-3. `network_settings.h` içine Wi-Fi adını ve parolanı gir. Örnek IP adreslerini, kendi ağında karta ayırdığın sabit adres, ağ geçidi ve alt ağ maskesiyle değiştir. Bu dosya Git tarafından yok sayılır.
-4. [Kart yazılımını](EKran/EKran.ino) Arduino IDE'de aç. **ESP32 Dev Module** ve kartın USB portunu seçip yükle. **NETWORK → ESP IP** satırında kartın adresini görebilirsin.
+2. Oluşturduğunuz **`EKran/network_settings.h`** dosyasını açın ve şu beş alanı doldurun.
+
+   | Alan | Yazmanız gereken değer |
+   | --- | --- |
+   | `ssid` | Wi-Fi ağınızın adı, çift tırnak içinde |
+   | `password` | Wi-Fi parolanız, çift tırnak içinde |
+   | `localIP` | ESP32 için ağınızda ayırdığınız sabit IP adresi |
+   | `gateway` | Modeminizin veya yönlendiricinizin yerel IP adresi |
+   | `subnet` | Wi-Fi bağlantınızın alt ağ maskesi |
+
+   IP adreslerini örnek dosyadaki gibi dört sayıyı virgülle ayırarak yazın. Windows'ta `ipconfig` komutu ağ geçidini ve alt ağ maskesini gösterir. Dosyayı kaydedin. `network_settings.h` Git tarafından yok sayılır.
+
+### Karta yükleme
+
+1. Arduino IDE'de **esp32 by Espressif Systems** kart paketini, **TFT_eSPI** ve **XPT2046_Touchscreen** kütüphanelerini kurun. TFT_eSPI'nin seçili kullanıcı ayarında yukarıdaki ekran sürücüsünü ve TFT pinlerini tanımlayın.
+2. [Kart yazılımını](EKran/EKran.ino) Arduino IDE'de açın. **ESP32 Dev Module** ve kartın USB portunu seçip yükleyin. Kartın adresini **NETWORK → ESP IP** satırında görebilirsiniz.
 
 ## İlk bağlantı testi
 
